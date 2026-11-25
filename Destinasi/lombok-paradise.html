@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Lombok Paradise</title>
+  <style>
+    body { font-family: 'Trebuchet MS', sans-serif; background: #e0f2fe; margin: 0; }
+    nav { background: white; padding: 20px 50px; text-align: right; }
+    nav a { margin-left: 20px; color: #0056b3; font-weight: bold; text-decoration: none; }
+    nav a.aktif { border-bottom: 3px solid #0056b3; }
+    main { padding: 20px; }
+    h1, h2 { color: #0056b3; text-align: center; }
+
+    /* 5 destinasi dalam 1 baris */
+    #grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; max-width: 1100px; margin: auto; }
+    .kartu { background: white; padding: 10px; border-radius: 8px; }
+    .kartu img { width: 100%; height: 110px; object-fit: cover; }
+    .kartu h3 { font-size: 15px; margin: 8px 0 4px; }
+    .kartu p { margin: 0; font-size: 13px; color: #2e7d32; font-weight: bold; }
+    @media (max-width: 800px) { #grid { grid-template-columns: repeat(2, 1fr); } }
+
+    form, .kotak { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+    input, select, button { display: block; width: 100%; padding: 8px; margin: 5px 0 12px; box-sizing: border-box; }
+    button { background: #0056b3; color: white; border: 0; cursor: pointer; }
+    .kotak p { margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <nav><a href="index.html">BERANDA</a> <a href="?" class="aktif">DESTINASI</a> <a href="#">EVENT</a></nav>
+
+  <main>
+    <!-- ===== Bagian katalog ===== -->
+    <section id="katalog">
+      <h1>Katalog Destinasi Wisata Lombok</h1>
+      <div id="grid"></div>
+
+      <h2>Pesan Tiket</h2>
+      <form id="form">
+        Nama <input id="nama">
+        No Telepon <input id="telp">
+        Destinasi <select id="tujuan"></select>
+        Tanggal <input id="tanggal" type="date">
+        Jumlah Dewasa <input id="dewasa" type="number" min="0" value="1">
+        Jumlah Anak (harga 50%) <input id="anak" type="number" min="0" value="0">
+        <b id="total"></b>
+        <button>PESAN</button>
+      </form>
+      <p id="pesan-error" style="text-align:center; color:#c62828"></p>
+    </section>
+
+    <!-- ===== Bagian hasil pemesanan ===== -->
+    <section id="bagian-hasil" hidden>
+      <div class="kotak" id="hasil"></div>
+      <p style="text-align:center"><a href="?">← Kembali ke katalog</a></p>
+    </section>
+  </main>
+
+  <script>
+    const wisata = [
+      { nama: "Pantai Senggigi", foto: "senggigi.jpg", harga: 10000 },
+      { nama: "Gunung Rinjani", foto: "rinjani.jpg", harga: 150000 },
+      { nama: "Gili Trawangan", foto: "gili.jpg", harga: 25000 },
+      { nama: "Pantai Kuta Mandalika", foto: "kuta.jpg", harga: 10000 },
+      { nama: "Desa Sade", foto: "sade.jpg", harga: 20000 }
+    ];
+    const $ = id => document.getElementById(id);
+    const rp = n => "Rp " + n.toLocaleString("id-ID");
+
+    const d = new URLSearchParams(location.search);
+
+    if (d.get("nama")) {
+      // ===== Tampilkan hasil pemesanan =====
+      $("katalog").hidden = true;
+      $("bagian-hasil").hidden = false;
+      document.title = "Hasil Pemesanan - Lombok Paradise";
+
+      const baris = [
+        ["Nama", d.get("nama")], ["Telepon", d.get("telp")], ["Destinasi", wisata[d.get("tujuan")].nama],
+        ["Tanggal", d.get("tanggal")], ["Pengunjung", d.get("dewasa") + " dewasa, " + d.get("anak") + " anak"],
+        ["Total Bayar", rp(+d.get("total"))]
+      ];
+      $("hasil").innerHTML = "<h3>Pesanan Berhasil!</h3>";
+      baris.forEach(([k, v]) => {
+        const p = document.createElement("p");
+        p.textContent = k + ": " + v;
+        $("hasil").appendChild(p);
+      });
+    } else {
+      // ===== Tampilkan katalog + formulir =====
+      document.title = "Katalog Destinasi - Lombok Paradise";
+
+      $("grid").innerHTML = wisata.map(w =>
+        `<div class="kartu"><img src="${w.foto}" alt="${w.nama}"><h3>${w.nama}</h3><p>Tiket: ${rp(w.harga)}</p></div>`).join("");
+      $("tujuan").innerHTML = wisata.map((w, i) => `<option value="${i}">${w.nama}</option>`).join("");
+
+      function hitung() {
+        const h = wisata[$("tujuan").value].harga;
+        const total = h * $("dewasa").value + h * 0.5 * $("anak").value;
+        $("total").textContent = "Total: " + rp(total);
+        return total;
+      }
+      document.querySelectorAll("select, input[type=number]").forEach(e => e.oninput = hitung);
+      hitung();
+
+      // Saat form dikirim: validasi, lalu muat ulang halaman ini dengan data pesanan
+      $("form").onsubmit = e => {
+        e.preventDefault();
+        if (!$("nama").value.trim() || !$("telp").value.trim() || !$("tanggal").value || +$("dewasa").value + +$("anak").value < 1) {
+          $("pesan-error").textContent = "Semua kolom wajib diisi dan minimal 1 pengunjung.";
+          return;
+        }
+        const data = new URLSearchParams({
+          nama: $("nama").value.trim(), telp: $("telp").value.trim(), tujuan: $("tujuan").value,
+          tanggal: $("tanggal").value, dewasa: $("dewasa").value, anak: $("anak").value, total: hitung()
+        });
+        location.href = "?" + data;
+      };
+    }
+  </script>
+</body>
+</html>
