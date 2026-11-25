@@ -1,0 +1,19 @@
+body { font-family: 'Trebuchet MS', sans-serif; background: #e0f2fe; margin: 0; }
+nav { background: white; padding: 20px 50px; text-align: right; }
+nav a { margin-left: 20px; color: #0056b3; font-weight: bold; text-decoration: none; }
+nav a.aktif { border-bottom: 3px solid #0056b3; }
+main { padding: 20px; }
+h1, h2 { color: #0056b3; text-align: center; }
+
+/* 5 destinasi dalam 1 baris */
+#grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; max-width: 1100px; margin: auto; }
+.kartu { background: white; padding: 10px; border-radius: 8px; }
+.kartu img { width: 100%; height: 110px; object-fit: cover; }
+.kartu h3 { font-size: 15px; margin: 8px 0 4px; }
+.kartu p { margin: 0; font-size: 13px; color: #2e7d32; font-weight: bold; }
+@media (max-width: 800px) { #grid { grid-template-columns: repeat(2, 1fr); } }
+
+form, .kotak { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+input, select, button { display: block; width: 100%; padding: 8px; margin: 5px 0 12px; box-sizing: border-box; }
+button { background: #0056b3; color: white; border: 0; cursor: pointer; }
+.kotak p { margin: 8px 0; }
