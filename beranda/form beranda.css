@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+body {
+  margin: 0;
+  background: #e0f2fe;
+  color: #0056b3;
+}
+nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+  background: #fff;
+}
+nav a {
+  padding: 8px 15px;
+  margin-left: 8px;
+}
+header {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+.kontak-wrapper {
+  padding: 20px;
+  max-width: 400px;
+}
+input, select, textarea, button {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
