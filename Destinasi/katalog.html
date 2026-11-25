@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Katalog Destinasi - Lombok Paradise</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav><a href="index.html">BERANDA</a> <a href="katalog.html" class="aktif">DESTINASI</a> <a href="#">EVENT</a></nav>
+  <main>
+    <h1>Katalog Destinasi Wisata Lombok</h1>
+    <div id="grid"></div>
+
+    <h2>Pesan Tiket</h2>
+    <form id="form">
+      Nama <input id="nama">
+      No Telepon <input id="telp">
+      Destinasi <select id="tujuan"></select>
+      Tanggal <input id="tanggal" type="date">
+      Jumlah Dewasa <input id="dewasa" type="number" min="0" value="1">
+      Jumlah Anak (harga 50%) <input id="anak" type="number" min="0" value="0">
+      <b id="total"></b>
+      <button>PESAN</button>
+    </form>
+    <p id="pesan-error" style="text-align:center; color:#c62828"></p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
