@@ -1,0 +1,51 @@
+formulir.html
+#--------------
+<!DOCTYPE html>
+<html>
+<head><title>Ulasan</title><link rel="stylesheet" href="formulir.css"></head>
+<body>
+<nav><img src="logo.png"><a href="index.html">BERANDA</a> <a href="#">DESTINASI</a> <a href="formulir.html">ULASAN</a></nav>
+<form class="box"><h2>Beri Ulasan</h2>
+<input id="nama" placeholder="Nama"><input id="email" placeholder="Email">
+<p>Rating: <input type="radio" name="r" value="1">1 <input type="radio" name="r" value="2">2 <input type="radio" name="r" value="3">3 <input type="radio" name="r" value="4">4 <input type="radio" name="r" value="5">5</p>
+<textarea id="ulasan" placeholder="Tulis ulasan"></textarea><p id="pesan"></p><button type="button" id="kirim">KIRIM</button></form><script src="formulir.js"></script></body></html>
+
+formulir.css
+#--------------
+body { margin:0; font-family:Arial; background:#e0f2fe; }
+nav { background:white; padding:15px; }
+nav img { height:40px; }
+nav a { color:blue; margin:10px; text-decoration:none; }
+.box { background:white; width:300px; margin:30px auto; padding:20px; border-radius:10px; }
+input:not([type=radio]), textarea { width:100%; padding:8px; margin:5px 0; box-sizing:border-box; }
+input[type=radio] { width:auto; }
+button { width:100%; padding:10px; background:blue; color:white; border:0; }
+#pesan { color:red; }
+
+formulir.js
+-----------------
+document.getElementById("kirim").onclick = function() {
+var nama = document.getElementById("nama").value;
+var email = document.getElementById("email").value;
+var ulasan = document.getElementById("ulasan").value;
+var rating = document.querySelector('input[name="r"]:checked');
+if (nama == "") alert("Nama harus diisi");
+else if (email == "" || email.indexOf("@") == -1) alert("Email tidak valid");
+else if (rating == null) alert("Pilih rating");
+else if (ulasan == "") alert("Ulasan harus diisi");
+else window.location.href = "tx.html";
+};
+
+
+tx.html
+-----------
+<!DOCTYPE html>
+<html>
+<head><title>Terima Kasih</title><link rel="stylesheet" href="formulir.css"></head>
+<body>
+<nav><img src="logo.png"><a href="index.html">BERANDA</a> <a href="#">DESTINASI</a> <a href="formulir.html">ULASAN</a></nav>
+<div class="box"><h2>Terima Kasih!</h2>
+<p>Terima kasih sudah memberi ulasan.</p>
+<a href="index.html">Kembali ke Beranda</a></div>
+</body>
+</html>
