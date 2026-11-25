@@ -1,0 +1,9 @@
+body { margin: 0; font-family: 'Trebuchet MS', sans-serif; background: #e0f2fe; }
+nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background: white; } nav img { height: 50px; }
+nav a { text-decoration: none; color: #0056b3; margin-left: 15px; font-weight: bold; }
+.box { background: white; max-width: 320px; margin: 45px auto; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.box h2 { color: #0056b3; margin: 0 0 15px; text-align: center; } #pesan { color: red; font-size: 14px; margin: 0 0 10px; }
+.box input[type="text"], .box input[type="email"], .box textarea { display: block; width: 100%; margin-bottom: 10px; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
+.box button { width: 100%; padding: 10px; background: #0056b3; color: white; border: 0; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.rating { display: flex; flex-direction: row-reverse; justify-content: center; } .rating input { display: none; } .rating label { font-size: 30px; color: #ccc; cursor: pointer; }
+.rating input:checked ~ label, .rating label:hover, .rating label:hover ~ label { color: orange; }
